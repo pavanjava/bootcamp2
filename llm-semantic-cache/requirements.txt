@@ -1,0 +1,6 @@
+redis==5.0.8
+litellm==1.44.13
+litellm[proxy]
+fastapi==0.112.2
+uvicorn==0.30.6
+openai==1.43.0
