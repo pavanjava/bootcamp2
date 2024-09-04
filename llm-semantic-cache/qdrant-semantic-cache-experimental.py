@@ -27,10 +27,11 @@ async def test_qdrant_semantic_cache_acompletion():
         qdrant_collection_name="semantic-cache",
         similarity_threshold=0.8,
         qdrant_quantization_config="binary",
-        qdrant_semantic_cache_embedding_model="ollama/all-minilm:33m"
+        # qdrant_semantic_cache_embedding_model='ollama/snowflake-arctic-embed:33m'
     )
 
     response1 = await litellm.acompletion(
+        api_base='http://localhost:11434',
         model="ollama/llama3.1",
         messages=[
             {
@@ -40,12 +41,14 @@ async def test_qdrant_semantic_cache_acompletion():
         ],
         # mock_response="hello",
         max_tokens=20,
+        cache={'no-cache': False}
     )
     print(f"Response1: {response1}")
 
     random_number = random.randint(1, 100000)
 
     response2 = await litellm.acompletion(
+        api_base='http://localhost:11434',
         model="ollama/llama3.1",
         messages=[
             {
@@ -54,6 +57,7 @@ async def test_qdrant_semantic_cache_acompletion():
             }
         ],
         max_tokens=20,
+        cache={'no-cache': False}
     )
     print(f"Response2: {response2}")
     # assert response1.id == response2.id
