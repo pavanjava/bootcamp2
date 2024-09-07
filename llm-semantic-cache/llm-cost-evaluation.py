@@ -1,5 +1,6 @@
 import os
 
+import litellm
 from litellm import completion, cost_per_token
 from dotenv import load_dotenv, find_dotenv
 import json
@@ -7,11 +8,12 @@ import json
 
 class LLMCostMetrics:
     _ = load_dotenv(find_dotenv())
+    litellm.set_verbose = True
 
     def display_hidden_params(self):
         response = completion(
-            api_key=os.environ['OPENAI_API_KEY'],
-            model="gpt-3.5-turbo",
+            # api_key=os.environ['OPENAI_API_KEY'],
+            model="ollama/llama3.1",
             messages=[{"role": "user", "content": "Hey, how's it going?"}]
         )
 
@@ -22,7 +24,7 @@ class LLMCostMetrics:
         response = self.display_hidden_params()
         prompt_tokens = response.usage.prompt_tokens
         completion_tokens = response.usage.completion_tokens
-        prompt_tokens_cost_usd_dollar, completion_tokens_cost_usd_dollar = cost_per_token(model="gpt-3.5-turbo",
+        prompt_tokens_cost_usd_dollar, completion_tokens_cost_usd_dollar = cost_per_token(model="ollama/llama3.1",
                                                                                           prompt_tokens=prompt_tokens,
                                                                                           completion_tokens=completion_tokens)
         print(f'prompt_tokens_cost_usd_dollar: {prompt_tokens_cost_usd_dollar}')
