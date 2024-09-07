@@ -41,7 +41,8 @@ async def test_qdrant_semantic_cache_acompletion():
             }
         ],
         # mock_response="hello",
-        max_tokens=20
+        max_tokens=20,
+        # cache={'no-cache': False}
     )
     print(f"Response1: {response1}")
 
@@ -54,7 +55,8 @@ async def test_qdrant_semantic_cache_acompletion():
                 "content": f"write a one sentence poem about: {random_number}",
             }
         ],
-        max_tokens=20
+        max_tokens=20,
+        # cache={'no-cache': False}
     )
     print(f"Response2: {response2}")
     # assert response1.id == response2.id
